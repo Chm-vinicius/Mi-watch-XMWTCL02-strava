@@ -2,16 +2,18 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, Length, MaxLength } from 'class-validator';
 
 @InputType()
-export class NewRecipeInput {
+export class NewActivityInput {
   @Field()
   @MaxLength(30)
-  title: string;
+  name: string;
 
-  @Field({ nullable: true })
-  @IsOptional()
+  @Field({ nullable: false })
   @Length(30, 255)
-  description?: string;
+  type: string;
 
-  @Field(type => [String])
-  ingredients: string[];
+  @Field({ nullable: false })
+  startDate: string;
+
+  @Field({ nullable: false })
+  duration: number;
 }

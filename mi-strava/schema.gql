@@ -14,3 +14,14 @@ type User {
 type Query {
   user(id: Int!): User!
 }
+
+type Mutation {
+  newActivity(data: NewActivityInput!): Boolean!
+}
+
+input NewActivityInput {
+  name: String!
+  type: String!
+  startDate: String!
+  duration: Float!
+}

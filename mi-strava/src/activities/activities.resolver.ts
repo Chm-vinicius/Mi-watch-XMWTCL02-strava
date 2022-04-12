@@ -1,6 +1,7 @@
-import { Args, Resolver, Int, Query } from "@nestjs/graphql";
+import { Args, Resolver, Mutation } from "@nestjs/graphql";
 import { Activities } from "./activities.model";
 import { ActivitiesService } from "./activities.service";
+import { NewActivityInput } from "./dto/newActivities.input";
 
 @Resolver(of => Activities)
 export class ActivitiesResolver {
@@ -8,9 +9,13 @@ export class ActivitiesResolver {
         private activityService: ActivitiesService
     ) {}
 
-    @Query(returns => Activities)
-    async activity(@Args(
-        'id', { type: () => Int }) id: number) {
-        return this.activityService.create(id)
+    @Mutation(returns => Boolean)
+    async newActivity(@Args('data') data: NewActivityInput) {
+        const ret = this.activityService.create(data)
+        if(!ret){
+            return true
+        } else {
+            return false
+        }
     }
 }
